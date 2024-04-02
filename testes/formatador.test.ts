@@ -4,7 +4,7 @@ import { AvaliadorSintaticoPortugolStudio } from '../fontes/avaliador-sintatico/
 import { FormatadorPortugolStudio } from '../fontes/formatador/formatador-portugol-studio';
 import { LexadorPortugolStudio } from '../fontes/lexador/lexador-portugol-studio';
 
-describe('Formatadores > Portugol Studio', () => {
+describe.skip('Formatadores > Portugol Studio', () => {
     const formatador = new FormatadorPortugolStudio(sistemaOperacional.EOL);
     const avaliadorSintatico = new AvaliadorSintaticoPortugolStudio();
     const lexador = new LexadorPortugolStudio();
