@@ -1,3 +1,5 @@
+export const PI = Math.PI;
+
 export async function potencia(base: number, expoente: number): Promise<number> {
     return Promise.resolve(Math.pow(base, expoente));
 }
