@@ -360,6 +360,37 @@ describe('Interpretador (Portugol Studio)', () => {
 
                 expect(retornoInterpretador.erros).toHaveLength(0);
             });
+
+            it('Leia', async () => {
+                // Aqui vamos simular a resposta para uma variável de `leia()`.
+                const respostas = ['1200'];
+                interpretador.interfaceEntradaSaida = {
+                    question: (mensagem: string, callback: Function) => {
+                        callback(respostas.shift());
+                    },
+                };
+
+                const retornoLexador = lexador.mapear([
+                    `programa`,
+                    `{`, 
+                    `    inteiro numero,a1,a2,a3,a4`,
+                    `    funcao inicio()`,
+                    `    {`,
+                    `        escreva("Quantas pessoas Foram ao Jogo de Futebol?  ")`,
+                    `        leia(numero)`,
+                    `        a1 = numero*10/100`,
+                    `        a2 = numero*50/100`,
+                    `        escreva("\n A Renda de pessoas A R$ 5 foi: ", a1)`,
+                    `        escreva("\n A Renda de pessoas A R$ 10 foi: ", a2)`,
+                    `    }`,
+                    `}`], -1);
+
+                const retornoAvaliadorSintatico = avaliadorSintatico.analisar(retornoLexador, -1);
+
+                const retornoInterpretador = await interpretador.interpretar(retornoAvaliadorSintatico.declaracoes);
+
+                expect(retornoInterpretador.erros).toHaveLength(0);
+            });
         });
     });
 });

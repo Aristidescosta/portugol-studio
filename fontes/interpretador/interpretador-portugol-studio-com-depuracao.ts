@@ -1,6 +1,7 @@
 import { Leia } from '@designliquido/delegua/declaracoes';
 import { visitarExpressaoLeiaComum } from './comum';
 import { InterpretadorComDepuracao } from '@designliquido/delegua/interpretador/interpretador-com-depuracao';
+import { PilhaEscoposExecucaoPortugolStudio } from './pilha-escopos-execucao-portugol-studio';
 
 export class InterpretadorPortugolStudioComDepuracao extends InterpretadorComDepuracao {
     mensagemPrompt: string;
@@ -8,6 +9,7 @@ export class InterpretadorPortugolStudioComDepuracao extends InterpretadorComDep
     constructor(diretorioBase: string, funcaoDeRetorno: Function = null, funcaoDeRetornoMesmaLinha: Function = null) {
         super(diretorioBase, funcaoDeRetorno, funcaoDeRetornoMesmaLinha);
         this.mensagemPrompt = '> ';
+        this.pilhaEscoposExecucao = new PilhaEscoposExecucaoPortugolStudio();
     }
 
     /**
