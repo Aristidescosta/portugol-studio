@@ -1,10 +1,12 @@
 import { Leia } from '@designliquido/delegua/declaracoes';
 import { InterpretadorBase } from '@designliquido/delegua/interpretador/interpretador-base';
 import { visitarExpressaoLeiaComum } from './comum';
+import { PilhaEscoposExecucaoPortugolStudio } from './pilha-escopos-execucao-portugol-studio';
 
 export class InterpretadorPortugolStudio extends InterpretadorBase {
     constructor(diretorioBase: string, performance = false, funcaoDeRetorno: Function = null) {
         super(diretorioBase, performance, funcaoDeRetorno);
+        this.pilhaEscoposExecucao = new PilhaEscoposExecucaoPortugolStudio();
     }
 
     /**
