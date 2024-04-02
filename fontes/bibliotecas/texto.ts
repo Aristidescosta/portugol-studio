@@ -1,17 +1,17 @@
-export async function numero_caracteres(cadeia: string){
+export async function numero_caracteres(cadeia: string) {
     return Promise.resolve(cadeia.length);
 }
 
-export async function caixa_alta(cad: string){
+export async function caixa_alta(cad: string) {
     return Promise.resolve(cad.toUpperCase());
 }
 
-export async function caixa_baixa(cad: string){
+export async function caixa_baixa(cad: string) {
     return Promise.resolve(cad.toLowerCase());
 }
 
-export async function substituir(cad: string, texto_pesquisa: string, texto_substituto: string){
-    return Promise.resolve(cad.replace(texto_pesquisa,texto_substituto));
+export async function substituir(cad: string, texto_pesquisa: string, texto_substituto: string) {
+    return Promise.resolve(cad.replace(texto_pesquisa, texto_substituto));
 }
 
 export async function preencher_a_esquerda(car: string, tamanho: number, cad: string): Promise<string> {
@@ -27,20 +27,26 @@ export async function obter_caracter(cad: string, indice: number): Promise<strin
     if (indice < 0) {
         throw new Error(`O índice do caracter (${indice}) é menor que 0`);
     } else if (indice > cad.length - 1) {
-        throw new Error(`O índice do caracter (${indice}) é maior que o número de caracteres na cadeia (${cad.length})`);
+        throw new Error(
+            `O índice do caracter (${indice}) é maior que o número de caracteres na cadeia (${cad.length})`
+        );
     } else {
         return cad.charAt(indice);
     }
 }
 
-export async function posicao_texto(cadeia: string, texto : string, posicao_inicial: number){
+export async function posicao_texto(cadeia: string, texto: string, posicao_inicial: number) {
     return Promise.resolve(cadeia.indexOf(texto, posicao_inicial));
 }
 
-export async function extrair_subtexto(cadeia: string, posicao_inicial: number, posicao_final: number): Promise<string> {
-    try {
-        return cadeia.substring(posicao_inicial, posicao_final);
-    } catch (excecao) {
-        throw new Error("Posição inicial ou final inválida. A posição deve estar entre 0 e o tamanho da cadeia");
+export async function extrair_subtexto(
+    cadeia: string,
+    posicao_inicial: number,
+    posicao_final: number
+): Promise<string> {
+    if (posicao_inicial < 0 || posicao_final > cadeia.length) {
+        throw new Error('Posição inicial ou final inválida. A posição deve estar entre 0 e o tamanho da cadeia');
+    } else {
+        return Promise.resolve(cadeia.substring(posicao_inicial, posicao_final));
     }
 }
