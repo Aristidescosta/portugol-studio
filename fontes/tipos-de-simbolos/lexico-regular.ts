@@ -1,5 +1,6 @@
 export default {
     ADICAO: 'ADICAO',
+    BIBLIOTECA: 'BIBLIOTECA',
     CADEIA: 'CADEIA',
     CARACTER: 'CARACTER',
     CASO: 'CASO',
@@ -26,6 +27,7 @@ export default {
     IGUAL: 'IGUAL',
     IGUAL_IGUAL: 'IGUAL_IGUAL',
     INCREMENTAR: 'INCREMENTAR',
+    INCLUA: 'INCLUA',
     INTEIRO: 'INTEIRO',
     LEIA: 'LEIA',
     LOGICO: 'LOGICO',
@@ -49,6 +51,7 @@ export default {
     PROGRAMA: 'PROGRAMA',
     RETORNE: 'RETORNE',
     REAL: 'REAL',
+    SETA: 'SETA',
     SUBTRACAO: 'SUBTRACAO',
     VIRGULA: 'VIRGULA',
     SE: 'SE',

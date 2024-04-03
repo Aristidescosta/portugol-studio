@@ -117,14 +117,27 @@ export class LexadorPortugolStudio extends LexadorBase {
             case '-':
                 this.inicioSimbolo = this.atual;
                 this.avancar();
-                if (this.simboloAtual() === '=') {
-                    this.adicionarSimbolo(tiposDeSimbolos.MENOS_IGUAL);
-                    this.avancar();
-                } else if (this.simboloAtual() === '-') {
-                    this.adicionarSimbolo(tiposDeSimbolos.DECREMENTAR);
-                    this.avancar();
-                } else {
-                    this.adicionarSimbolo(tiposDeSimbolos.SUBTRACAO);
+                switch (this.simboloAtual()) {
+                    case '=':
+                        this.adicionarSimbolo(tiposDeSimbolos.MENOS_IGUAL);
+                        this.avancar();
+                        break;
+                    case '-':
+                        // Aqui temos dois casos:
+                        // 1. Decremento ('--')
+                        // 2. Apelido para importação de biblioteca ('-->')
+                        this.avancar();
+                        if (this.simboloAtual() === '>') {
+                            this.adicionarSimbolo(tiposDeSimbolos.SETA, '-->');
+                            this.avancar();
+                        } else {
+                            this.adicionarSimbolo(tiposDeSimbolos.DECREMENTAR);
+                        }
+                        
+                        break;
+                    default:
+                        this.adicionarSimbolo(tiposDeSimbolos.SUBTRACAO);
+                        break;
                 }
 
                 break;
