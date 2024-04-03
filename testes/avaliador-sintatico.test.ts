@@ -287,6 +287,24 @@ describe('Avaliador sintático (Portugol Studio)', () => {
                 expect(retornoAvaliadorSintatico).toBeTruthy();
                 expect(retornoAvaliadorSintatico.declaracoes.length).toBeGreaterThan(0);
             });
+
+            it('Importação de bibliotecas', () => {
+                const resultado = lexador.mapear([
+                    'programa',
+                    '{',
+                    '    inclua biblioteca Matematica --> mat',
+                    '    funcao inicio()',
+                    '    {',
+                    '        escreva(mat.raiz(4.0, 2.0))',
+                    '    }',
+                    '}'
+                ], -1);
+
+                const retornoAvaliadorSintatico = avaliadorSintatico.analisar(resultado, -1);
+
+                expect(retornoAvaliadorSintatico).toBeTruthy();
+                expect(retornoAvaliadorSintatico.declaracoes.length).toBeGreaterThan(0);
+            });
         });
 
         describe('Casos de Falha', () => {
@@ -374,9 +392,7 @@ describe('Avaliador sintático (Portugol Studio)', () => {
                 }
 
                 expect(t).toThrow(ErroAvaliadorSintatico);
-            })
-
-            
+            });
         });
     });
 });
