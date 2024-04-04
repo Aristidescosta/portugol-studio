@@ -164,6 +164,22 @@ describe('Lexador (Portugol Studio)', () => {
                 expect(resultado).toBeTruthy();
                 expect(resultado.simbolos).toHaveLength(27);
             });
+
+            it('Importação de Biblioteca', () => {
+                const resultado = lexador.mapear([
+                    'programa',
+                    '{',
+                    '    inclua biblioteca Matematica --> mat',
+                    '    funcao inicio()',
+                    '    {',
+                    '        escreva(mat.raiz(4.0, 2.0))',
+                    '    }',
+                    '}'
+                ], -1);
+
+                expect(resultado).toBeTruthy();
+                expect(resultado.simbolos).toHaveLength(25);
+            });
         });
     });
 });

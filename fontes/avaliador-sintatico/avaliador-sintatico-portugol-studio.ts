@@ -1,5 +1,6 @@
 import {
     AcessoIndiceVariavel,
+    AcessoMetodoOuPropriedade,
     Agrupamento,
     AtribuicaoPorIndice,
     Atribuir,
@@ -28,6 +29,7 @@ import {
     EscrevaMesmaLinha,
     Retorna,
     Const,
+    Importar,
 } from '@designliquido/delegua/declaracoes';
 import { RetornoLexador, RetornoAvaliadorSintatico } from '@designliquido/delegua/interfaces/retornos';
 import { AvaliadorSintaticoBase } from '@designliquido/delegua/avaliador-sintatico/avaliador-sintatico-base';
@@ -145,6 +147,9 @@ export class AvaliadorSintaticoPortugolStudio extends AvaliadorSintaticoBase {
         while (true) {
             if (this.verificarSeSimboloAtualEIgualA(tiposDeSimbolos.PARENTESE_ESQUERDO)) {
                 expressao = this.finalizarChamada(expressao);
+            } else if (this.verificarSeSimboloAtualEIgualA(tiposDeSimbolos.PONTO)) {
+                const nome = this.consumir(tiposDeSimbolos.IDENTIFICADOR, "Esperado nome do método após '.'.");
+                expressao = new AcessoMetodoOuPropriedade(this.hashArquivo, expressao, nome);
             } else if (this.verificarSeSimboloAtualEIgualA(tiposDeSimbolos.COLCHETE_ESQUERDO)) {
                 const indices = [];
                 do {
@@ -205,6 +210,24 @@ export class AvaliadorSintaticoPortugolStudio extends AvaliadorSintaticoBase {
         this.consumir(tiposDeSimbolos.PARENTESE_DIREITO, "Esperado ')' após os valores em escreva.");
 
         return new EscrevaMesmaLinha(Number(simboloAtual.linha), simboloAtual.hashArquivo, argumentos);
+    }
+
+    /**
+     * Declaração para inclusão de uma biblioteca. 
+     * Exemplo: `inclua biblioteca Matematica --> mat` seria o mesmo que
+     * `const mat = importar('matematica')` em Delégua.
+     * @returns Uma declaração do tipo `Importar`.
+     */
+    declaracaoInclua(): Const {
+        this.avancarEDevolverAnterior();
+        this.consumir(tiposDeSimbolos.BIBLIOTECA, 'Esperado palavra reservada "biblioteca" após "inclua".');
+        const nomeBiblioteca = this.consumir(tiposDeSimbolos.IDENTIFICADOR, 'Esperado identificador com nome de biblioteca após palavra reservada "biblioteca"');
+        this.consumir(tiposDeSimbolos.SETA, 'Esperado seta de atribuição após nome de biblioteca.');
+        const constanteBiblioteca = this.consumir(tiposDeSimbolos.IDENTIFICADOR, 'Esperado identificador com nome de constante de biblioteca após seta de atribuição em declaração "inclua".');
+        return new Const(
+            constanteBiblioteca,
+            new Importar(new Literal(this.hashArquivo, nomeBiblioteca.linha, nomeBiblioteca.lexema), null)
+        );
     }
 
     blocoEscopo(): Declaracao[] {
@@ -734,7 +757,6 @@ export class AvaliadorSintaticoPortugolStudio extends AvaliadorSintaticoBase {
 
 
     expressao(): Construto {
-        // if (this.verificarSeSimboloAtualEIgualA(tiposDeSimbolos.LEIA)) return this.declaracaoLeia();
         return this.atribuir();
     }
 
@@ -809,6 +831,8 @@ export class AvaliadorSintaticoPortugolStudio extends AvaliadorSintaticoBase {
                 return this.declaracaoFazer();
             case tiposDeSimbolos.FUNCAO:
                 return this.funcao('funcao');
+            case tiposDeSimbolos.INCLUA:
+                return this.declaracaoInclua();
             case tiposDeSimbolos.INTEIRO:
                 return this.declaracaoInteiros();
             case tiposDeSimbolos.LEIA:
