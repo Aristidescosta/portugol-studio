@@ -1,7 +1,9 @@
-import { Leia } from '@designliquido/delegua/declaracoes';
-import { visitarExpressaoLeiaComum } from './comum';
+import { Importar, Leia } from '@designliquido/delegua/declaracoes';
 import { InterpretadorComDepuracao } from '@designliquido/delegua/interpretador/interpretador-com-depuracao';
 import { PilhaEscoposExecucaoPortugolStudio } from './pilha-escopos-execucao-portugol-studio';
+import { DeleguaModulo } from '@designliquido/delegua/estruturas';
+
+import * as comum from './comum';
 
 export class InterpretadorPortugolStudioComDepuracao extends InterpretadorComDepuracao {
     mensagemPrompt: string;
@@ -12,6 +14,10 @@ export class InterpretadorPortugolStudioComDepuracao extends InterpretadorComDep
         this.pilhaEscoposExecucao = new PilhaEscoposExecucaoPortugolStudio();
     }
 
+    async visitarDeclaracaoImportar(declaracao: Importar): Promise<DeleguaModulo> {
+        return comum.visitarExpressaoImportarComum(declaracao);
+    }
+
     /**
      * Execução da leitura de valores da entrada configurada no
      * início da aplicação.
@@ -19,7 +25,7 @@ export class InterpretadorPortugolStudioComDepuracao extends InterpretadorComDep
      * @returns Promise com o resultado da leitura.
      */
     async visitarExpressaoLeia(expressao: Leia): Promise<any> {
-        return visitarExpressaoLeiaComum(this.interfaceEntradaSaida, this.pilhaEscoposExecucao, expressao);
+        return comum.visitarExpressaoLeiaComum(this.interfaceEntradaSaida, this.pilhaEscoposExecucao, expressao);
     }
 
     /**
