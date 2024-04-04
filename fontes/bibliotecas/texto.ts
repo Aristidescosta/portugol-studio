@@ -26,13 +26,15 @@ export async function preencher_a_esquerda(car: string, tamanho: number, cad: st
 export async function obter_caracter(cad: string, indice: number): Promise<string> {
     if (indice < 0) {
         throw new Error(`O índice do caracter (${indice}) é menor que 0`);
-    } else if (indice > cad.length - 1) {
+    } 
+    
+    if (indice > cad.length - 1) {
         throw new Error(
             `O índice do caracter (${indice}) é maior que o número de caracteres na cadeia (${cad.length})`
         );
-    } else {
-        return cad.charAt(indice);
-    }
+    } 
+        
+    return cad.charAt(indice);
 }
 
 export async function posicao_texto(cadeia: string, texto: string, posicao_inicial: number) {
@@ -46,7 +48,7 @@ export async function extrair_subtexto(
 ): Promise<string> {
     if (posicao_inicial < 0 || posicao_final > cadeia.length) {
         throw new Error('Posição inicial ou final inválida. A posição deve estar entre 0 e o tamanho da cadeia');
-    } else {
-        return Promise.resolve(cadeia.substring(posicao_inicial, posicao_final));
-    }
+    } 
+        
+    return Promise.resolve(cadeia.substring(posicao_inicial, posicao_final));
 }
