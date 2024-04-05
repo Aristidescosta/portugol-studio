@@ -64,7 +64,7 @@ export async function dia_semana_completo(
     ];
 
     if (numero_dia > 0 && numero_dia < 8) {
-        let dia: string = dias[numero_dia];
+        let dia: string = dias[numero_dia - 1];
 
         if (caixa_alta) {
             dia = dia.toUpperCase();
@@ -82,7 +82,7 @@ export async function dia_semana_curto(numero_dia: number, caixa_alta: boolean, 
     const dias: string[] = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sabado'];
 
     if (numero_dia > 0 && numero_dia < 8) {
-        let dia: string = dias[numero_dia];
+        let dia: string = dias[numero_dia - 1];
 
         if (caixa_alta) {
             dia = dia.toUpperCase();
@@ -104,7 +104,7 @@ export async function dia_semana_abreviado(
     const dias: string[] = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'];
 
     if (numero_dia > 0 && numero_dia < 8) {
-        let dia: string = dias[numero_dia];
+        let dia: string = dias[numero_dia - 1];
 
         if (caixa_alta) {
             dia = dia.toUpperCase();
