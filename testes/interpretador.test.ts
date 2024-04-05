@@ -34,7 +34,7 @@ describe('Interpretador (Portugol Studio)', () => {
                 }
 
                 const retornoInterpretador = await interpretador.interpretar(retornoAvaliadorSintatico.declaracoes);
-
+                console.log(retornoInterpretador)
                 expect(retornoInterpretador.erros).toHaveLength(0);
             });
             it('Matriz', async () => {

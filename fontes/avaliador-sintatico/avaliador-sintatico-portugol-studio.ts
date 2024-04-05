@@ -138,6 +138,18 @@ export class AvaliadorSintaticoPortugolStudio extends AvaliadorSintaticoBase {
             case tiposDeSimbolos.REAL:
                 const simboloVariavel: SimboloInterface = this.avancarEDevolverAnterior();
                 return new Literal(this.hashArquivo, Number(simboloVariavel.linha), simboloVariavel.literal);
+            default:
+                this.avancarEDevolverAnterior();
+                let valor: any = null;
+                if (this.verificarSeSimboloAtualEIgualA(tiposDeSimbolos.COLCHETE_DIREITO)) {
+                    return new Vetor(this.hashArquivo, Number(simboloAtual.linha), []);
+                }
+
+                while (!this.verificarSeSimboloAtualEIgualA(tiposDeSimbolos.COLCHETE_DIREITO)) {
+                    valor = this.atribuir();
+                }
+
+                return new Vetor(this.hashArquivo, Number(simboloAtual.linha), valor);
         }
     }
 
@@ -213,7 +225,7 @@ export class AvaliadorSintaticoPortugolStudio extends AvaliadorSintaticoBase {
     }
 
     /**
-     * Declaração para inclusão de uma biblioteca. 
+     * Declaração para inclusão de uma biblioteca.
      * Exemplo: `inclua biblioteca Matematica --> mat` seria o mesmo que
      * `const mat = importar('matematica')` em Delégua.
      * @returns Uma declaração do tipo `Importar`.
@@ -585,6 +597,10 @@ export class AvaliadorSintaticoPortugolStudio extends AvaliadorSintaticoBase {
         return new Var(identificador, valorInicializacao, 'inteiro');
     }
 
+    protected simboloAtual(): SimboloInterface {
+        return this.simbolos[this.atual]
+    }
+
     declaracaoInteiros(): Var[] {
         const simboloInteiro = this.consumir(tiposDeSimbolos.INTEIRO, '');
 
@@ -597,10 +613,19 @@ export class AvaliadorSintaticoPortugolStudio extends AvaliadorSintaticoBase {
 
             if (this.verificarSeSimboloAtualEIgualA(tiposDeSimbolos.COLCHETE_ESQUERDO)) {
                 // TODO
-                const numeroPosicoes = this.consumir(
-                    tiposDeSimbolos.INTEIRO,
-                    'Esperado número inteiro para definir quantas posições terá o vetor.'
-                );
+                let numeroPosicoes;
+
+                if (this.simboloAtual()) {
+                    numeroPosicoes = this.consumir(
+                        tiposDeSimbolos.IDENTIFICADOR,
+                        'Esperado uma variável inteiro para definir quantas posições terá o vetor.'
+                    );
+                } else {
+                    numeroPosicoes = this.consumir(
+                        tiposDeSimbolos.INTEIRO,
+                        'Esperado número inteiro para definir quantas posições terá o vetor.'
+                    );
+                }
 
                 this.consumir(
                     tiposDeSimbolos.COLCHETE_DIREITO,
