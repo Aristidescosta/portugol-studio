@@ -37,6 +37,43 @@ describe('Interpretador (Portugol Studio)', () => {
 
                 expect(retornoInterpretador.erros).toHaveLength(0);
             });
+            it('Matriz', async () => {
+                const retornoLexador = lexador.mapear([
+                    'programa',
+                    '{',
+
+                    'funcao inicio()',
+                    '{',
+                    // Define as dimensões (linhas e colunas) da matriz
+                    'const inteiro TAMANHO = 5',
+
+                    // Cria a matriz
+                    'inteiro matriz[TAMANHO][TAMANHO]',
+
+                    'para (inteiro linha = 0; linha < TAMANHO; linha++)',
+                    '{',
+                    'para (inteiro coluna = 0; coluna < TAMANHO; coluna++)',
+                    '{',
+                    'matriz[linha][coluna] = linha + coluna',
+
+                    'escreva("[", matriz[linha][coluna], "]")',
+                    '}',
+
+                    'escreva ("\n")',
+                    '}',
+                    '}',
+                    '}',
+                ], -1);
+                const retornoAvaliadorSintatico = avaliadorSintatico.analisar(retornoLexador, -1);
+
+                interpretador.funcaoDeRetorno = (saida: string) => {
+                    expect(saida).toEqual("Olá Mundo")
+                }
+
+                const retornoInterpretador = await interpretador.interpretar(retornoAvaliadorSintatico.declaracoes);
+
+                expect(retornoInterpretador.erros).toHaveLength(0);
+            });
 
             it('Sucesso - Leia', async () => {
                 // Aqui vamos simular a resposta para cinco variáveis de `leia()`.
@@ -204,23 +241,23 @@ describe('Interpretador (Portugol Studio)', () => {
                 const retornoLexador = lexador.mapear([
                     'programa',
                     '{  ',
-                        //variável global do tipo inteiro  
-                        'inteiro variavel',
+                    //variável global do tipo inteiro
+                    'inteiro variavel',
 
-                        'funcao inicio()',
-                        '{  ',
-                            'inteiro outra_variavel',
+                    'funcao inicio()',
+                    '{  ',
+                    'inteiro outra_variavel',
 
-                            'real altura = 1.79',  
-                    
-                            'cadeia frase = "Isso é uma variável do tipo cadeia"',
-                    
-                            'caracter inicial = \'P\'',  
-                    
-                            'logico exemplo = verdadeiro',
-                    
-                            'escreva(altura)',
-                        '}',
+                    'real altura = 1.79',
+
+                    'cadeia frase = "Isso é uma variável do tipo cadeia"',
+
+                    'caracter inicial = \'P\'',
+
+                    'logico exemplo = verdadeiro',
+
+                    'escreva(altura)',
+                    '}',
                     '}',
                 ], -1);
                 const retornoAvaliadorSintatico = avaliadorSintatico.analisar(retornoLexador, -1);
@@ -241,29 +278,29 @@ describe('Interpretador (Portugol Studio)', () => {
                 const retornoLexador = lexador.mapear([
                     'programa',
                     '{  ',
-                        'funcao inicio()',
-                        '{  ',
-                            'inteiro numero',
-                            'escreva("Quantos elementos da sequência de Fibonacci deseja calcular? ")',
-                            'leia(numero)',
-                            'para (inteiro i = 1; i <= numero ; i++)',
-                            '{',
-                            '   escreva(fibonacci(i), " ")',
-                            '}',
-                            'escreva("\n")',
-                        '}',
-                        'funcao inteiro fibonacci(inteiro posicao)',
-                        '{	',
-                            'se (posicao == 1)',
-                            '{',
-                                'retorne 0',
-                            '}',
-                            'senao se (posicao == 2)',
-                            '{',
-                                'retorne 1',
-                            '}',                    
-                            'retorne fibonacci(posicao - 1) + fibonacci(posicao - 2)',
-                        '}',
+                    'funcao inicio()',
+                    '{  ',
+                    'inteiro numero',
+                    'escreva("Quantos elementos da sequência de Fibonacci deseja calcular? ")',
+                    'leia(numero)',
+                    'para (inteiro i = 1; i <= numero ; i++)',
+                    '{',
+                    '   escreva(fibonacci(i), " ")',
+                    '}',
+                    'escreva("\n")',
+                    '}',
+                    'funcao inteiro fibonacci(inteiro posicao)',
+                    '{	',
+                    'se (posicao == 1)',
+                    '{',
+                    'retorne 0',
+                    '}',
+                    'senao se (posicao == 2)',
+                    '{',
+                    'retorne 1',
+                    '}',
+                    'retorne fibonacci(posicao - 1) + fibonacci(posicao - 2)',
+                    '}',
                     '}',
                 ], -1);
                 const retornoAvaliadorSintatico = avaliadorSintatico.analisar(retornoLexador, -1);
@@ -284,43 +321,43 @@ describe('Interpretador (Portugol Studio)', () => {
                 const retornoLexador = lexador.mapear([
                     'programa',
                     '{',
-                        'funcao inicio ()',
-                        '{	',                            
+                    'funcao inicio ()',
+                    '{	',
 
-                            'const real PRECO_PARAFUSO = 1.50',
-                            'const real PRECO_ARRUELA  = 2.00',
-                            'const real PRECO_PORCA    = 2.50',
+                    'const real PRECO_PARAFUSO = 1.50',
+                    'const real PRECO_ARRUELA  = 2.00',
+                    'const real PRECO_PORCA    = 2.50',
 
-                            'cadeia nome',
-                            'inteiro quantidade_parafusos, quantidade_arruelas, quantidade_porcas',
-                            'real total_parafusos, total_arruelas, total_porcas, total_pagar',
+                    'cadeia nome',
+                    'inteiro quantidade_parafusos, quantidade_arruelas, quantidade_porcas',
+                    'real total_parafusos, total_arruelas, total_porcas, total_pagar',
 
-                            'escreva("Digite seu nome: ")',
-                            'leia(nome)',
-                            
-                            'escreva("\nDigite a quantidade de parafusos que deseja comprar: ")',
-                            'leia(quantidade_parafusos)',
-                            
-                            'escreva("Digite a quantidade de arruelas que deseja comprar: ")',
-                            'leia(quantidade_arruelas)',
+                    'escreva("Digite seu nome: ")',
+                    'leia(nome)',
 
-                            'escreva("Digite a quantidade de porcas que deseja comprar: ")',
-                            'leia(quantidade_porcas)',
+                    'escreva("\nDigite a quantidade de parafusos que deseja comprar: ")',
+                    'leia(quantidade_parafusos)',
 
-                            'total_parafusos = PRECO_PARAFUSO * quantidade_parafusos',
-                            'total_arruelas = PRECO_ARRUELA * quantidade_arruelas',
-                            'total_porcas = PRECO_PORCA * quantidade_porcas',
-                            
-                            'total_pagar = total_parafusos + total_porcas + total_arruelas',
-                            
-                            'escreva("Cliente: ", nome, "\n")',
-                            'escreva("===============================\n")',
-                            'escreva("Parafusos: ", quantidade_parafusos, "\n")',
-                            'escreva("Arruelas: " , quantidade_arruelas, "\n")',
-                            'escreva("Porcas: ", quantidade_porcas, "\n")',
-                            'escreva("===============================\n")',
-                            'escreva("Total a pagar:  R$ ", total_pagar, "\n")',
-                        '}',
+                    'escreva("Digite a quantidade de arruelas que deseja comprar: ")',
+                    'leia(quantidade_arruelas)',
+
+                    'escreva("Digite a quantidade de porcas que deseja comprar: ")',
+                    'leia(quantidade_porcas)',
+
+                    'total_parafusos = PRECO_PARAFUSO * quantidade_parafusos',
+                    'total_arruelas = PRECO_ARRUELA * quantidade_arruelas',
+                    'total_porcas = PRECO_PORCA * quantidade_porcas',
+
+                    'total_pagar = total_parafusos + total_porcas + total_arruelas',
+
+                    'escreva("Cliente: ", nome, "\n")',
+                    'escreva("===============================\n")',
+                    'escreva("Parafusos: ", quantidade_parafusos, "\n")',
+                    'escreva("Arruelas: " , quantidade_arruelas, "\n")',
+                    'escreva("Porcas: ", quantidade_porcas, "\n")',
+                    'escreva("===============================\n")',
+                    'escreva("Total a pagar:  R$ ", total_pagar, "\n")',
+                    '}',
                     '}',
                 ], -1);
                 const retornoAvaliadorSintatico = avaliadorSintatico.analisar(retornoLexador, -1);
@@ -334,24 +371,24 @@ describe('Interpretador (Portugol Studio)', () => {
                 const retornoLexador = lexador.mapear([
                     'programa',
                     '{',
-                        'funcao inicio()',
-                        '{',
-                            'escolha (77)',
-                            '{',
-                                'caso 1:',
-                                    'escreva ("Voce é lindo(a)!")',
-                                    'pare',   // Impede que as instruções do caso 2 sejam executadas
-                                 'caso 2:',
-                                    'escreva ("Voce é um monstro!")',
-                                    'pare',   // Impede que as instruções do caso 2 sejam executadas
-                                 'caso 3:',
-                                    'escreva ("Tchau!")',
-                                    'pare',
-                                 'caso contrario:', // Será executado para qualquer opção diferente de 1, 2 ou 3
-                                    'escreva ("Opção Inválida !")',
-                            '}',
-                            'escreva("\n")',
-                        '}',
+                    'funcao inicio()',
+                    '{',
+                    'escolha (77)',
+                    '{',
+                    'caso 1:',
+                    'escreva ("Voce é lindo(a)!")',
+                    'pare',   // Impede que as instruções do caso 2 sejam executadas
+                    'caso 2:',
+                    'escreva ("Voce é um monstro!")',
+                    'pare',   // Impede que as instruções do caso 2 sejam executadas
+                    'caso 3:',
+                    'escreva ("Tchau!")',
+                    'pare',
+                    'caso contrario:', // Será executado para qualquer opção diferente de 1, 2 ou 3
+                    'escreva ("Opção Inválida !")',
+                    '}',
+                    'escreva("\n")',
+                    '}',
                     '}',
                 ], -1);
                 const retornoAvaliadorSintatico = avaliadorSintatico.analisar(retornoLexador, -1);
@@ -372,7 +409,7 @@ describe('Interpretador (Portugol Studio)', () => {
 
                 const retornoLexador = lexador.mapear([
                     `programa`,
-                    `{`, 
+                    `{`,
                     `    inteiro numero,a1,a2,a3,a4`,
                     `    funcao inicio()`,
                     `    {`,
