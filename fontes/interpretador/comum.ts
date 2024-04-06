@@ -6,6 +6,7 @@ import { ErroEmTempoDeExecucao } from '@designliquido/delegua/excecoes';
 
 import * as matematica from '../bibliotecas/matematica';
 import * as texto from '../bibliotecas/texto';
+import * as utils from '../bibliotecas/utils';
 
 function carregarBibliotecaMatematica(): DeleguaModulo {
     const metodos: { [nome: string]: FuncaoPadrao } = {
@@ -43,12 +44,30 @@ function carregarBibliotecaTexto(): DeleguaModulo {
     return objetoTexto;
 }
 
+function carregarBibliotecaUtils(): DeleguaModulo {
+    const metodos: { [nome: string]: FuncaoPadrao } = {
+        obter_diretorio_usuario: new FuncaoPadrao(0, utils.obter_diretorio_usuario),
+        numero_elementos: new FuncaoPadrao(1, utils.numero_elementos),
+        numero_linhas: new FuncaoPadrao(1, utils.numero_linhas),
+        numero_colunas: new FuncaoPadrao(1, utils.numero_colunas),
+        sorteia: new FuncaoPadrao(2, utils.sorteia),
+        aguarde: new FuncaoPadrao(1, utils.aguarde),
+        tempo_decorrido: new FuncaoPadrao(0, utils.tempo_decorrido)
+    }
+
+    const objetoUtils = new DeleguaModulo('Utils');
+    objetoUtils.componentes = metodos;
+    return objetoUtils;
+}
+
 export async function visitarExpressaoImportarComum(expressao: Importar): Promise<any> {
     switch (expressao.caminho.valor) {
         case 'Matematica':
             return carregarBibliotecaMatematica();
         case 'Texto':
             return carregarBibliotecaTexto();
+        case 'Utils':
+            return carregarBibliotecaUtils();
         default:
             throw new ErroEmTempoDeExecucao(null, `Biblioteca não implementada: ${expressao.caminho}.`);
     }

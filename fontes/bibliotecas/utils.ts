@@ -1,5 +1,6 @@
-const horaInicial: number = Date.now();
 import * as os from 'os';
+
+const horaInicial: number = Date.now();
 
 export async function obter_diretorio_usuario(): Promise<string> {
     try {
@@ -24,12 +25,13 @@ export async function numero_colunas(matriz: any[][]): Promise<number> {
 export async function sorteia(minimo: number, maximo: number): Promise<number> {
     if (minimo > maximo) {
         throw new Error(`O valor mínimo (${minimo}) é maior do que o valor máximo (${maximo})`);
-    } else if (minimo === maximo) {
+    } 
+    
+    if (minimo === maximo) {
         throw new Error(`Os valores mínimo e máximo são iguais: ${minimo}`);
     }
 
     return Math.floor(Math.random() * (maximo + 1 - minimo)) + minimo;
-
 }
 
 export async function aguarde(intervalo: number): Promise<void> {
