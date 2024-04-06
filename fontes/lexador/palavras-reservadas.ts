@@ -1,6 +1,7 @@
 import tiposDeSimbolos from '../tipos-de-simbolos/lexico-regular';
 
 export const palavrasReservadas = {
+    biblioteca: tiposDeSimbolos.BIBLIOTECA,
     cadeia: tiposDeSimbolos.CADEIA,
     caracter: tiposDeSimbolos.CARACTER,
     caso: tiposDeSimbolos.CASO,
@@ -13,6 +14,7 @@ export const palavrasReservadas = {
     faca: tiposDeSimbolos.FACA,
     falso: tiposDeSimbolos.FALSO,
     funcao: tiposDeSimbolos.FUNCAO,
+    inclua: tiposDeSimbolos.INCLUA,
     inteiro: tiposDeSimbolos.INTEIRO,
     leia: tiposDeSimbolos.LEIA,
     logico: tiposDeSimbolos.LOGICO,

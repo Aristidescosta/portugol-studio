@@ -1,7 +1,7 @@
 {
     "name": "@designliquido/portugol-studio",
     "description": "Dialeto de Portugol Studio baseado em Delégua e TypeScript",
-    "version": "0.0.1",
+    "version": "0.0.3",
     "license": "MIT",
     "bugs": {
         "url": "https://github.com/DesignLiquido/portugol-studio/issues"
@@ -24,9 +24,10 @@
         "deixar-codigo-bonito": "prettier --config .prettierrc --write fontes/**/*.ts"
     },
     "dependencies": {
-        "@designliquido/delegua": "^0.33.6"
+        "@designliquido/delegua": "^0.33.15"
     },
     "devDependencies": {
+        "@types/estree": "^1.0.5",
         "@types/jest": "^29.5.12",
         "@types/node": "^20.11.17",
         "copyfiles": "^2.4.1",
