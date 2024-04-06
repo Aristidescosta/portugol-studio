@@ -7,9 +7,9 @@ import {
     sorteia,
     aguarde,
     tempo_decorrido,
-} from '../../fontes/bibliotecas/utils';
+} from '../../fontes/bibliotecas/util';
 
-describe('Biblioteca Utils', () => {
+describe('Biblioteca Util', () => {
     describe('Obter Diretório do Usuário', () => {
         it('Trivial', async () => {
             const resultado = await obter_diretorio_usuario();
